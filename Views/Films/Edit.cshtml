@@ -1,0 +1,13 @@
+﻿@using web_app_asp_net_mvc_database_first.Models
+@model FilmViewModel
+
+<h3>Фильм</h3>
+
+@using (Html.BeginForm("Edit", "Films", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+@Html.ValidationSummary()
+@Html.EditorForModel()
+
+<input type="submit" value="Сохранить" />
+@Html.ActionLink("Отменить", "Index", "Films")
+}

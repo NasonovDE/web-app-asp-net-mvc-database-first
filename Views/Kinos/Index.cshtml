@@ -1,0 +1,58 @@
+﻿@using web_app_asp_net_mvc_database_first.Models
+@using web_app_asp_net_mvc_database_first.Extensions
+@model List<KinoViewModel>
+
+<h3>Расписание</h3>
+
+@Html.ActionLink("Добавить запись", "Create", "Kinos")
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Дата
+            </th>
+            <th>
+                Время
+            </th>
+            <th>
+                Кинотеатр
+            </th>
+            <th>
+                Фильм
+            </th>
+            <th>
+                Обложка
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var kino in Model)
+        {
+            <tr>
+                <td>
+                    @kino.KinoDate.ToString("dd-MM-yyyy")
+                </td>
+                <td>
+                    @kino.KinoTime.ToString("HH:mm")
+                </td>
+                <td>
+                    @string.Join(", ", kino.Cinemas.Select(x => $"{x.CinemaName}"))
+                </td>
+                <td>
+                    @kino.Films.Name
+                </td>
+                <td>
+                    <img src="/Films/GetImage/@kino.FilmId" style="max-width: 50px; max-height: 100px;" />
+                </td>
+                <td>
+                    @Html.ActionLink("Удалить", "Delete", "Kinos", new { id = kino.Id }, new { })
+                    @Html.ActionLink("Изменить", "Edit", "Kinos", new { id = kino.Id }, new { })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

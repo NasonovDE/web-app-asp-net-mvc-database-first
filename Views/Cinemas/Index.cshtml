@@ -1,0 +1,40 @@
+﻿@using web_app_asp_net_mvc_database_first.Models
+@using web_app_asp_net_mvc_database_first.Extensions
+@model List<CinemaViewModel>
+
+    <h3>Кинотеатры</h3>
+
+@Html.ActionLink("Добавить запись", "Create", "Cinemas")
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Кинотеатр
+            </th>
+            <th>
+                Количество мест
+            </th>            
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cinema in Model)
+        {
+        <tr>
+            <td>
+                @cinema.CinemaName
+            </td>
+            <td>
+                @cinema.NumberOfPlaces
+            </td>                       
+            <td>
+                @Html.ActionLink("Удалить", "Delete", "Cinemas", new { id = cinema.Id }, new { })
+                @Html.ActionLink("Изменить", "Edit", "Cinemas", new { id = cinema.Id }, new { })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

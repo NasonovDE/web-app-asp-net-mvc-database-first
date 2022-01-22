@@ -1,0 +1,46 @@
+﻿@using web_app_asp_net_mvc_database_first.Models
+@using web_app_asp_net_mvc_database_first.Extensions
+@model List<FilmViewModel>
+
+<h3>Фильмы</h3>
+
+@Html.ActionLink("Добавить запись", "Create", "Films")
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Фильм
+            </th>
+            <th>
+                Ограничение
+            </th>
+            <th>
+                Обложка
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var films in Model)
+        {
+        <tr>
+            <td>
+                @films.Name
+            </td>
+            <td>
+                @films.FilmYears.GetDisplayValue()
+            </td>
+            <td>
+                <img src="/Films/GetImage/@films.Id" style="max-width: 100px; max-height: 200px;" />
+            </td>
+            <td>
+                @Html.ActionLink("Удалить", "Delete", "Films", new { id = films.Id }, new { })
+                @Html.ActionLink("Изменить", "Edit", "Films", new { id = films.Id }, new { })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

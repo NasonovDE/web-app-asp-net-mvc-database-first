@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище KinoAfishaDFModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cinemas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CinemaName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NumberOfPlaces" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FilmImages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Data" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateChanged" Type="datetime" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Films">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FilmYears" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KinoCinemas">
+          <Key>
+            <PropertyRef Name="Kinos_Id" />
+            <PropertyRef Name="Cinemas_Id" />
+          </Key>
+          <Property Name="Kinos_Id" Type="int" Nullable="false" />
+          <Property Name="Cinemas_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kinos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="KinoDate" Type="datetime" Nullable="false" />
+          <Property Name="KinoTime" Type="datetime" Nullable="false" />
+          <Property Name="FilmId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FilmImages_Films">
+          <End Role="Films" Type="Self.Films" Multiplicity="1" />
+          <End Role="FilmImages" Type="Self.FilmImages" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Films">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FilmImages">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KinoCinemas_Cinemas1">
+          <End Role="Cinemas" Type="Self.Cinemas" Multiplicity="1" />
+          <End Role="KinoCinemas" Type="Self.KinoCinemas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cinemas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KinoCinemas">
+              <PropertyRef Name="Cinemas_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KinoCinemas_Kinos1">
+          <End Role="Kinos" Type="Self.Kinos" Multiplicity="1" />
+          <End Role="KinoCinemas" Type="Self.KinoCinemas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kinos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KinoCinemas">
+              <PropertyRef Name="Kinos_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kinos_Films">
+          <End Role="Films" Type="Self.Films" Multiplicity="1" />
+          <End Role="Kinos" Type="Self.Kinos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Films">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Kinos">
+              <PropertyRef Name="FilmId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище KinoAfishaDFModelContainer">
+          <EntitySet Name="Cinemas" EntityType="Self.Cinemas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FilmImages" EntityType="Self.FilmImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Films" EntityType="Self.Films" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KinoCinemas" EntityType="Self.KinoCinemas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kinos" EntityType="Self.Kinos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FilmImages_Films" Association="Self.FK_FilmImages_Films">
+            <End Role="Films" EntitySet="Films" />
+            <End Role="FilmImages" EntitySet="FilmImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KinoCinemas_Cinemas1" Association="Self.FK_KinoCinemas_Cinemas1">
+            <End Role="Cinemas" EntitySet="Cinemas" />
+            <End Role="KinoCinemas" EntitySet="KinoCinemas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KinoCinemas_Kinos1" Association="Self.FK_KinoCinemas_Kinos1">
+            <End Role="Kinos" EntitySet="Kinos" />
+            <End Role="KinoCinemas" EntitySet="KinoCinemas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kinos_Films" Association="Self.FK_Kinos_Films">
+            <End Role="Films" EntitySet="Films" />
+            <End Role="Kinos" EntitySet="Kinos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KinoAfishaDFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cinemas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CinemaName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumberOfPlaces" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kinos" Relationship="Self.KinoCinemas" FromRole="Cinemas" ToRole="Kinos" />
+        </EntityType>
+        <EntityType Name="FilmImages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateChanged" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Films" Relationship="Self.FK_FilmImages_Films" FromRole="FilmImages" ToRole="Films" />
+        </EntityType>
+        <EntityType Name="Films">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FilmYears" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FilmImages" Relationship="Self.FK_FilmImages_Films" FromRole="Films" ToRole="FilmImages" />
+          <NavigationProperty Name="Kinos" Relationship="Self.FK_Kinos_Films" FromRole="Films" ToRole="Kinos" />
+        </EntityType>
+        <EntityType Name="Kinos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="KinoDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="KinoTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FilmId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Films" Relationship="Self.FK_Kinos_Films" FromRole="Kinos" ToRole="Films" />
+          <NavigationProperty Name="Cinemas" Relationship="Self.KinoCinemas" FromRole="Kinos" ToRole="Cinemas" />
+        </EntityType>
+        <Association Name="FK_FilmImages_Films">
+          <End Role="Films" Type="Self.Films" Multiplicity="1" />
+          <End Role="FilmImages" Type="Self.FilmImages" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Films">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FilmImages">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kinos_Films">
+          <End Role="Films" Type="Self.Films" Multiplicity="1" />
+          <End Role="Kinos" Type="Self.Kinos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Films">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Kinos">
+              <PropertyRef Name="FilmId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="KinoCinemas">
+          <End Role="Cinemas" Type="Self.Cinemas" Multiplicity="*" />
+          <End Role="Kinos" Type="Self.Kinos" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="KinoAfishaDFEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cinemas" EntityType="Self.Cinemas" />
+          <EntitySet Name="FilmImages" EntityType="Self.FilmImages" />
+          <EntitySet Name="Films" EntityType="Self.Films" />
+          <EntitySet Name="Kinos" EntityType="Self.Kinos" />
+          <AssociationSet Name="FK_FilmImages_Films" Association="Self.FK_FilmImages_Films">
+            <End Role="Films" EntitySet="Films" />
+            <End Role="FilmImages" EntitySet="FilmImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kinos_Films" Association="Self.FK_Kinos_Films">
+            <End Role="Films" EntitySet="Films" />
+            <End Role="Kinos" EntitySet="Kinos" />
+          </AssociationSet>
+          <AssociationSet Name="KinoCinemas" Association="Self.KinoCinemas">
+            <End Role="Cinemas" EntitySet="Cinemas" />
+            <End Role="Kinos" EntitySet="Kinos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище KinoAfishaDFModelContainer" CdmEntityContainer="KinoAfishaDFEntities">
+          <EntitySetMapping Name="Cinemas">
+            <EntityTypeMapping TypeName="KinoAfishaDFModel.Cinemas">
+              <MappingFragment StoreEntitySet="Cinemas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CinemaName" ColumnName="CinemaName" />
+                <ScalarProperty Name="NumberOfPlaces" ColumnName="NumberOfPlaces" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FilmImages">
+            <EntityTypeMapping TypeName="KinoAfishaDFModel.FilmImages">
+              <MappingFragment StoreEntitySet="FilmImages">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="DateChanged" ColumnName="DateChanged" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Films">
+            <EntityTypeMapping TypeName="KinoAfishaDFModel.Films">
+              <MappingFragment StoreEntitySet="Films">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FilmYears" ColumnName="FilmYears" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kinos">
+            <EntityTypeMapping TypeName="KinoAfishaDFModel.Kinos">
+              <MappingFragment StoreEntitySet="Kinos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KinoDate" ColumnName="KinoDate" />
+                <ScalarProperty Name="KinoTime" ColumnName="KinoTime" />
+                <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="KinoCinemas" TypeName="KinoAfishaDFModel.KinoCinemas" StoreEntitySet="KinoCinemas">
+            <EndProperty Name="Cinemas">
+              <ScalarProperty Name="Id" ColumnName="Cinemas_Id" />
+            </EndProperty>
+            <EndProperty Name="Kinos">
+              <ScalarProperty Name="Id" ColumnName="Kinos_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
